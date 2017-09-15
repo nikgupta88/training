@@ -142,6 +142,40 @@ mysql -u root -p
 |          3 | taman        |           1000 | agra         | 1995-05-13  | 2016-03-12           |
 |          4 | taman        |           1000 | bhopal       | 1995-08-13  | 2016-03-12           |
 +------------+--------------+----------------+--------------+-------------+----------------------+
+35- select * from department inner join employee on employee.employeeid=department.departmentid;
++--------------+---------+------+------------+--------------+----------------+--------------+-------------+----------------------+
+| departmentid | name    | head | employeeid | employeename | employeesalary | employeecity | employeedob | employee_joinig_date |
++--------------+---------+------+------------+--------------+----------------+--------------+-------------+----------------------+
+|            1 | ent     |    2 |          1 | aman         |           2000 | gwalior      | 1995-06-21  | 2015-09-12           |
+|            2 | sergery |   22 |          2 | raman        |           3000 | bhopal       | 1996-05-23  | 2016-03-12           |
+|            3 | i.c.u   |   27 |          3 | taman        |           1000 | agra         | 1995-05-13  | 2016-03-12           |
++--------------+---------+------+------------+--------------+----------------+--------------+-------------+----------------------+
+36- select * from department left join employee on employee.employeeid=department.departmentid;
++--------------+---------+------+------------+--------------+----------------+--------------+-------------+----------------------+
+| departmentid | name    | head | employeeid | employeename | employeesalary | employeecity | employeedob | employee_joinig_date |
++--------------+---------+------+------------+--------------+----------------+--------------+-------------+----------------------+
+|            1 | ent     |    2 |          1 | aman         |           2000 | gwalior      | 1995-06-21  | 2015-09-12           |
+|            2 | sergery |   22 |          2 | raman        |           3000 | bhopal       | 1996-05-23  | 2016-03-12           |
+|            3 | i.c.u   |   27 |          3 | taman        |           1000 | agra         | 1995-05-13  | 2016-03-12           |
++--------------+---------+------+------------+--------------+----------------+--------------+-------------+----------------------+
+37- select * from department right join employee on employee.employeeid=department.departmentid;
++--------------+---------+------+------------+--------------+----------------+--------------+-------------+----------------------+
+| departmentid | name    | head | employeeid | employeename | employeesalary | employeecity | employeedob | employee_joinig_date |
++--------------+---------+------+------------+--------------+----------------+--------------+-------------+----------------------+
+|            1 | ent     |    2 |          1 | aman         |           2000 | gwalior      | 1995-06-21  | 2015-09-12           |
+|            2 | sergery |   22 |          2 | raman        |           3000 | bhopal       | 1996-05-23  | 2016-03-12           |
+|            3 | i.c.u   |   27 |          3 | taman        |           1000 | agra         | 1995-05-13  | 2016-03-12           |
+|         NULL | NULL    | NULL |          4 | taman        |           1000 | bhopal       | 1995-08-13  | 2016-03-12           |
+|         NULL | NULL    | NULL |          5 | taman        |           8000 | agra         | 1995-08-13  | 2011-04-14           |
++--------------+---------+------+------------+--------------+----------------+--------------+-------------+----------------------+
+38-select employee.employeesalary, department.departmentid from employee inner join department on employee.employeeid=department.departmentid;
++----------------+--------------+
+| employeesalary | departmentid |
++----------------+--------------+
+|           2000 |            1 |
+|           3000 |            2 |
+|           1000 |            3 |
++----------------+--------------+
 
 
 
