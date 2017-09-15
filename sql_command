@@ -1,0 +1,177 @@
+mysql -u root -p
+
+1-  show databases;
+
+2-  use hospital;
+3-  select  database();
+4-  create table department (departmentid int primary key, name varchar(45),head int not null);
+5-  show tables;
++--------------------+
+| Tables_in_hospital |
++--------------------+
+| department         |
+| patient            |
++--------------------+
+
+6-  create table patient (patientid int primary key, name varchar(45),address varchar(80),phoneno int,DOB date,physician varchar(45));
+7-  show columns from patient;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| patientid | int(11)     | NO   | PRI | NULL    |       |
+| name      | varchar(45) | YES  |     | NULL    |       |
+| address   | varchar(80) | YES  |     | NULL    |       |
+| dob       | int(11)     | YES  |     | NULL    |       |
+| physician | varchar(45) | YES  |     | NULL    |       |
+| phone_no  | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+8-  alter table patient drop phoneno;
+9-  alter table patient add phone_no int;
+10- alter table patient add ph int after name;
+11- ALTER TABLE patient add i INT FIRST;
+12- alter table patient change DOB dob int;
+13- alter table patient modify dob date;
+14- create table employee (employeeid int primary key,employeename varchar(45),employeesalary int, employeecity varchar(45),employeedob date,employee_joinig_date date);
+15- insert into employee values (1,'aman',2000,'gwalior','1995-03-23','2015-03-22');
+16- select * from employee;
+17- update employee set employeedob='1995-06-21', employee_joinig_date ='2015-09-12' where employeeid=1;
+18- select empolyeename from employee where id=5;
+19- select employeename from employee where employeedob='1995'%;
+20- select max(employeesalary) from employee ;
++---------------------+
+| max(employeesalary) |
++---------------------+
+|                8000 |
++---------------------+
+21-  select * from employee where employeesalary=(select max(employeesalary) from employee );
+22-  select * from employee where employeeid in (select employeeid from employee where employeedob like '1995%' );
++------------+--------------+----------------+--------------+-------------+----------------------+
+| employeeid | employeename | employeesalary | employeecity | employeedob | employee_joinig_date |
++------------+--------------+----------------+--------------+-------------+----------------------+
+|          1 | aman         |           2000 | gwalior      | 1995-06-21  | 2015-09-12           |
+|          3 | taman        |           1000 | agra         | 1995-05-13  | 2016-03-12           |
+|          4 | taman        |           1000 | bhopal       | 1995-08-13  | 2016-03-12           |
+|          5 | taman        |           8000 | agra         | 1995-08-13  | 2011-04-14           |
++------------+--------------+----------------+--------------+-------------+--------------------
+
+23- select distinct(employeecity) from employee;
++--------------+
+| employeecity |
++--------------+
+| gwalior      |
+| bhopal       |
+| agra         |
++--------------+
+
+24-select * from employee order by employeename;
++------------+--------------+----------------+--------------+-------------+----------------------+
+| employeeid | employeename | employeesalary | employeecity | employeedob | employee_joinig_date |
++------------+--------------+----------------+--------------+-------------+----------------------+
+|          1 | aman         |           2000 | gwalior      | 1995-06-21  | 2015-09-12           |
+|          2 | raman        |           3000 | bhopal       | 1996-05-23  | 2016-03-12           |
+|          3 | taman        |           1000 | agra         | 1995-05-13  | 2016-03-12           |
+|          4 | taman        |           1000 | bhopal       | 1995-08-13  | 2016-03-12           |
+|          5 | taman        |           8000 | agra         | 1995-08-13  | 2011-04-14           |
++------------+--------------+----------------+--------------+-------------+----------------------+
+ 25-select * from employee group by employeename;
++------------+--------------+----------------+--------------+-------------+----------------------+
+| employeeid | employeename | employeesalary | employeecity | employeedob | employee_joinig_date |
++------------+--------------+----------------+--------------+-------------+----------------------+
+|          1 | aman         |           2000 | gwalior      | 1995-06-21  | 2015-09-12           |
+|          2 | raman        |           3000 | bhopal       | 1996-05-23  | 2016-03-12           |
+|          3 | taman        |           1000 | agra         | 1995-05-13  | 2016-03-12           |
++------------+--------------+----------------+--------------+-------------+----------------------+
+ 26- select min(employeesalary) from employee;
++---------------------+
+| min(employeesalary) |
++---------------------+
+|                1000 |
++---------------------+
+27- select avg(employeesalary) from employee;
++---------------------+
+| avg(employeesalary) |
++---------------------+
+|           3000.0000 |
++---------------------+
+28- select * from employee where employeename='aman' or (employeeid=5);
++------------+--------------+----------------+--------------+-------------+----------------------+
+| employeeid | employeename | employeesalary | employeecity | employeedob | employee_joinig_date |
++------------+--------------+----------------+--------------+-------------+----------------------+
+|          1 | aman         |           2000 | gwalior      | 1995-06-21  | 2015-09-12           |
+|          5 | taman        |           8000 | agra         | 1995-08-13  | 2011-04-14           |
++------------+--------------+----------------+--------------+-------------+----------------------+
+29- select * from employee where employeename='aman' and (employeeid=1);
++------------+--------------+----------------+--------------+-------------+----------------------+
+| employeeid | employeename | employeesalary | employeecity | employeedob | employee_joinig_date |
++------------+--------------+----------------+--------------+-------------+----------------------+
+|          1 | aman         |           2000 | gwalior      | 1995-06-21  | 2015-09-12           |
++------------+--------------+----------------+--------------+-------------+----------------------+
+30-select * from employee order by employeesalary desc limit 3;
++------------+--------------+----------------+--------------+-------------+----------------------+
+| employeeid | employeename | employeesalary | employeecity | employeedob | employee_joinig_date |
++------------+--------------+----------------+--------------+-------------+----------------------+
+|          5 | taman        |           8000 | agra         | 1995-08-13  | 2011-04-14           |
+|          2 | raman        |           3000 | bhopal       | 1996-05-23  | 2016-03-12           |
+|          1 | aman         |           2000 | gwalior      | 1995-06-21  | 2015-09-12           |
++------------+--------------+----------------+--------------+-------------+----------------------+
+31-select * from employee  limit 3;
++------------+--------------+----------------+--------------+-------------+----------------------+
+| employeeid | employeename | employeesalary | employeecity | employeedob | employee_joinig_date |
++------------+--------------+----------------+--------------+-------------+----------------------+
+|          1 | aman         |           2000 | gwalior      | 1995-06-21  | 2015-09-12           |
+|          2 | raman        |           3000 | bhopal       | 1996-05-23  | 2016-03-12           |
+|          3 | taman        |           1000 | agra         | 1995-05-13  | 2016-03-12           |
++------------+--------------+----------------+--------------+-------------+----------------------+
+32-select * from employee where employeeid!=1;
+33-select * from employee where employeeid<>1;
++------------+--------------+----------------+--------------+-------------+----------------------+
+| employeeid | employeename | employeesalary | employeecity | employeedob | employee_joinig_date |
++------------+--------------+----------------+--------------+-------------+----------------------+
+|          2 | raman        |           3000 | bhopal       | 1996-05-23  | 2016-03-12           |
+|          3 | taman        |           1000 | agra         | 1995-05-13  | 2016-03-12           |
+|          4 | taman        |           1000 | bhopal       | 1995-08-13  | 2016-03-12           |
+|          5 | taman        |           8000 | agra         | 1995-08-13  | 2011-04-14           |
++------------+--------------+----------------+--------------+-------------+----------------------+
+34- select * from employee where employeeid between 1 and 4;
++------------+--------------+----------------+--------------+-------------+----------------------+
+| employeeid | employeename | employeesalary | employeecity | employeedob | employee_joinig_date |
++------------+--------------+----------------+--------------+-------------+----------------------+
+|          1 | aman         |           2000 | gwalior      | 1995-06-21  | 2015-09-12           |
+|          2 | raman        |           3000 | bhopal       | 1996-05-23  | 2016-03-12           |
+|          3 | taman        |           1000 | agra         | 1995-05-13  | 2016-03-12           |
+|          4 | taman        |           1000 | bhopal       | 1995-08-13  | 2016-03-12           |
++------------+--------------+----------------+--------------+-------------+----------------------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
