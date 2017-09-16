@@ -3,7 +3,7 @@ mysql -u root -p
 1-  show databases;
 
 2-  use hospital;
-3-  select  database();
+3-  select  database();/ create database hospital;
 4-  create table department (departmentid int primary key, name varchar(45),head int not null);
 5-  show tables;
 +--------------------+
