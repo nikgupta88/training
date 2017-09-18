@@ -179,6 +179,287 @@ mysql -u root -p
 
 
 
+show databases;
++---------------------------+
+| Database                  |
++---------------------------+
+| information_schema        |
+| Beryl_Systems             |
+| Beryl_Systems_test        |
+| company                   |
+| hospital                  |
+| iparksmart_backend        |
+| mysql                     |
+| performance_schema        |
+| trademarks411_development |
+| trademarks411_test        |
++---------------------------+
+
+use hospital;
+Database changed
+
+show tables;
++--------------------+
+| Tables_in_hospital |
++--------------------+
+| appointment        |
+| department         |
+| disease            |
+| doctor             |
+| patient            |
++--------------------+
+
+ show columns from appointment;
++---------------+----------+------+-----+---------+-------+
+| Field         | Type     | Null | Key | Default | Extra |
++---------------+----------+------+-----+---------+-------+
+| appointmentid | int(11)  | NO   | PRI | NULL    |       |
+| date_time     | datetime | YES  |     | NULL    |       |
+| patientid     | int(11)  | YES  | MUL | NULL    |       |
+| doctorid      | int(11)  | YES  | MUL | NULL    |       |
++---------------+----------+------+-----+---------+-------+
+
+show columns from department;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| deptid   | int(11)     | NO   | PRI | NULL    |       |
+| deptname | varchar(45) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+show columns from doctor;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| doctorid           | int(11)     | NO   | PRI | NULL    |       |
+| doctorname         | varchar(45) | YES  |     | NULL    |       |
+| year_of_experience | int(11)     | YES  |     | NULL    |       |
+| deptid             | int(11)     | YES  | MUL | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+
+
+show columns from patient;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| patientid | int(11)     | NO   | PRI | NULL    |       |
+| name      | varchar(45) | YES  |     | NULL    |       |
+| gender    | varchar(45) | YES  |     | NULL    |       |
+| mobile_no | int(11)     | YES  |     | NULL    |       |
+| deptid    | int(11)     | YES  | MUL | NULL    |       |
+| disease   | int(11)     | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+
+select * from doctor;
++----------+------------+--------------------+--------+
+| doctorid | doctorname | year_of_experience | deptid |
++----------+------------+--------------------+--------+
+|        1 | santosh    |                 24 |      1 |
+|        2 | raman      |                  2 |      1 |
+|        3 | vimal      |                 12 |      1 |
+|        4 | ram        |                 12 |      2 |
+|        5 | shyam      |                 22 |      2 |
+|        6 | ajay       |                 22 |      3 |
+|        7 | vijay      |                  5 |      3 |
++----------+------------+--------------------+--------+
+
+
+ select * from department;
++--------+-----------+
+| deptid | deptname  |
++--------+-----------+
+|      1 | ent       |
+|      2 | physician |
+|      3 | surgery   |
++--------+-----------+
+
+
+select * from patient;
++-----------+--------+--------+-----------+--------+---------+
+| patientid | name   | gender | mobile_no | deptid | disease |
++-----------+--------+--------+-----------+--------+---------+
+|         1 | vijay  | male   | 903934744 |      1 |       1 |
+|         2 | aman   | male   | 903934744 |      1 |       1 |
+|         3 | sanjay | male   | 903934744 |      2 |       2 |
+|         4 | aakash | male   | 903934744 |      2 |       2 |
+|         5 | pooja  | female | 903934744 |      3 |       3 |
+|         6 | jyoti  | female | 903934744 |      3 |       3 |
++-----------+--------+--------+-----------+--------+---------+
+
+select * from appointment;
++---------------+---------------------+-----------+----------+
+| appointmentid | date_time           | patientid | doctorid |
++---------------+---------------------+-----------+----------+
+|             1 | 2017-06-22 10:22:23 |         1 |        1 |
+|             2 | 2017-06-12 10:22:23 |         2 |        3 |
+|             3 | 2017-06-12 10:22:23 |         3 |        5 |
+|             4 | 2017-06-12 10:22:23 |         4 |        4 |
+|             5 | 2017-07-12 12:22:23 |         5 |        6 |
+|             6 | 2017-07-12 12:22:23 |         6 |        6 |
++---------------+---------------------+-----------+----------+
+
+select deptid from department union select deptid from patient;
++--------+
+| deptid |
++--------+
+|      1 |
+|      2 |
+|      3 |
++--------+
+
+select deptid from department union all select deptid from patient;
++--------+
+| deptid |
++--------+
+|      1 |
+|      2 |
+|      3 |
+|      1 |
+|      1 |
+|      2 |
+|      2 |
+|      3 |
+|      3 |
+
+
+mysql> select max(deptid) from patient;
++-------------+
+| max(deptid) |
++-------------+
+|           3 |
++-------------+
+1 row in set (0.07 sec)
+
+mysql> select min(deptid) from patient;
++-------------+
+| min(deptid) |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(deptid) from patient;
++---------------+
+| count(deptid) |
++---------------+
+|             6 |
++---------------+
+1 row in set (0.02 sec)
+
+mysql> select avg(deptid) from patient;
++-------------+
+| avg(deptid) |
++-------------+
+|      2.0000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select distinct(deptid) from patient;
++--------+
+| deptid |
++--------+
+|      1 |
+|      2 |
+|      3 |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> select groupby(deptid) from patient;
+ERROR 1305 (42000): FUNCTION hospital.groupby does not exist
+mysql> select * from patient group by deptid;
++-----------+--------+--------+-----------+--------+---------+
+| patientid | name   | gender | mobile_no | deptid | disease |
++-----------+--------+--------+-----------+--------+---------+
+|         1 | vijay  | male   | 903934744 |      1 |       1 |
+|         3 | sanjay | male   | 903934744 |      2 |       2 |
+|         5 | pooja  | female | 903934744 |      3 |       3 |
++-----------+--------+--------+-----------+--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from patient where name like "%y";
++-----------+--------+--------+-----------+--------+---------+
+| patientid | name   | gender | mobile_no | deptid | disease |
++-----------+--------+--------+-----------+--------+---------+
+|         1 | vijay  | male   | 903934744 |      1 |       1 |
+|         3 | sanjay | male   | 903934744 |      2 |       2 |
++-----------+--------+--------+-----------+--------+---------+
+2 rows in set (0.02 sec)
+
+mysql> select * from patient where name like "%y%";
++-----------+--------+--------+-----------+--------+---------+
+| patientid | name   | gender | mobile_no | deptid | disease |
++-----------+--------+--------+-----------+--------+---------+
+|         1 | vijay  | male   | 903934744 |      1 |       1 |
+|         3 | sanjay | male   | 903934744 |      2 |       2 |
+|         6 | jyoti  | female | 903934744 |      3 |       3 |
++-----------+--------+--------+-----------+--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select sum(deptid) from patient;
++-------------+
+| sum(deptid) |
++-------------+
+|          12 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(deptid) as a from patient;
++------+
+| a    |
++------+
+|   12 |
++------+
+1 row in set (0.01 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
